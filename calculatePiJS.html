@@ -2,11 +2,13 @@
 
 <body>
     <input type="button" onclick="Calculate()" value="Calculate Pi" />
+    <input type="button" onclick="CalculateWASM()" value="Calculate Pi" />
     <script type="text/javascript">
         //Made by Masterdude
         var c = 0;
         function Calculate() {
-            var c = prompt("Enter number of cycles:", "0");
+            var c = 100000000;
+            console.time('Calculate');
             if (c > 0) {
                 var Pi = 0;
                 var n = 1;
@@ -14,11 +16,18 @@
                     Pi = Pi + (4 / n) - (4 / (n + 2))
                     n = n + 4
                 }
+                console.timeEnd('Calculate');
                 alert(Pi);
             }
             else {
                 alert("Canceled or Error in input: Input must be positive.");
-            }
+            }        
+            
+        }
+        
+        function CalculateWASM() {
+            var c = 100000000;     
+            
         }
     </script>
 </body>
