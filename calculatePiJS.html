@@ -1,13 +1,13 @@
 <html>
 
 <body>
-    <input type="button" onclick="Calculate()" value="Calculate Pi" />
-    <input type="button" onclick="CalculateWASM()" value="Calculate Pi" />
+    <input type="button" onclick="Calculate()" value="Calculate Pi in JS" />
+    <input type="button" onclick="CalculateWASM()" value="Calculate Pi WASM" />
     <script type="text/javascript">
         //Made by Masterdude
-        var c = 0;
+        var c = 100000000;
         function Calculate() {
-            var c = 100000000;
+            console.log('JavaScript')
             console.time('Calculate');
             if (c > 0) {
                 var Pi = 0;
@@ -24,10 +24,23 @@
             }        
             
         }
-        
         function CalculateWASM() {
-            var c = 100000000;     
-            
+            let calculatePi;
+
+            function loadWasm(filename) {
+                return fetch(filename)
+                .then(response => response.arrayBuffer())
+                .then(bits => WebAssembly.compile(bits))
+                .then(module => {return new WebAssembly.Instance(module)});
+            };
+
+            loadWasm('program.wasm')
+            .then(instance => {calculatePi = instance.exports._Z11calculatePii})
+
+            console.time('CalculateWasm');
+            alert(calculatePi(c));
+            console.timeEnd('CalculateWasm');
+
         }
     </script>
 </body>
